@@ -198,6 +198,10 @@ repositories {
   maven { url 'https://jitpack.io' }
 }
 
+def versions = [
+  mapstruct       : '1.5.3.Final',
+]
+
 ext {
   log4JVersion = "2.19.0"
   testcontainersVersion = '1.17.6'
@@ -220,12 +224,20 @@ dependencies {
 
   implementation group: 'io.rest-assured', name: 'rest-assured'
 
+  annotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor', version: '1.4.2.Final'
+
   testImplementation(platform('org.junit:junit-bom:5.9.2'))
   testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
   testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', {
     exclude group: 'junit', module: 'junit'
     exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
   }
+
+
+  implementation group: 'org.flywaydb', name: 'flyway-core', version: '9.15.2'
+  implementation group: 'org.mapstruct', name: 'mapstruct', version: versions.mapstruct
+  implementation group: 'org.postgresql', name: 'postgresql', version: '42.5.1'
+
 
   implementation group: 'io.cucumber', name: 'cucumber-java', version: '7.11.1'
   testImplementation group: 'io.cucumber', name: 'cucumber-junit', version: '7.11.1'
@@ -244,6 +256,7 @@ dependencies {
 
 rootProject.tasks.named("processFunctionalTestResources") {
   duplicatesStrategy = 'include'
+
 }
 
 mainClassName = 'uk.gov.hmcts.reform.hmc.jp.Application'
